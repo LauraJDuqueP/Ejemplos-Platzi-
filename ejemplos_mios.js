@@ -505,3 +505,62 @@ var CantidadLibros = personas.reduce(Total, 0);
 console.log(
   `El total de libros que tienen todo el grupo de personas es de ${CantidadLibros}`
 );
+
+console.log(
+  `
+  
+  `
+);
+
+/////////////// clases ....
+////////  crear un prototipo que va a ser el prototipo de persona que va a saber saludar
+//////// decir su nombre y su apellido.
+/// voy a agrepar la edad por funcion para que pueda ser ingresada a cualquier persona
+/// luego agrago una funcion que ademas agraga la altura de la persona al objeto de ella.
+
+function gente(nombre, apellido, ocupacion) {
+  this.nombre = nombre;
+  this.apellido = apellido;
+  this.ocupacion = ocupacion;
+}
+
+gente.prototype.saludar = function () {
+  console.log(
+    `Hola mi nombre es ${this.nombre} ${this.apellido} y soy ${this.ocupacion}`
+  );
+};
+
+gente.prototype.edad = function (Edad) {
+  this.edad = Edad;
+  console.log(`Soy ${this.nombre} y tengo ${this.edad} años`);
+};
+
+gente.prototype.altura = function () {
+  let altura = Math.round(Math.random()) * 100 + 100;
+  this.altura = altura;
+
+  if (altura < 1.6) {
+    console.log(`${this.nombre} mide ${this.altura} cm es una persona baja`);
+  } else {
+    console.log(`${this.nombre} mide ${this.altura} cm es una persona alta`);
+  }
+};
+let gente_1 = new gente("Laura", "Duque", "Ingeniera");
+let gente_2 = new gente("Paula", "Duque", "Arquitecta");
+let gente_3 = new gente("Melissa", "Duque", "Productora");
+
+gente();
+console.log(gente_1);
+
+gente_1.saludar();
+gente_2.edad(25);
+gente_3.altura();
+
+console.log(gente_2);
+console.log(gente_3);
+
+console.log(`
+
+`);
+// Herencia prototipal... vamos a crear un hijo de mi prototipo gente... vamos a crear nuevas personas con una nueva ocupacion ...
+// para este ejemplo desarrolladores.
