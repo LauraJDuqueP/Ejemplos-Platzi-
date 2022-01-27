@@ -517,6 +517,21 @@ console.log(
 //////// decir su nombre y su apellido.
 /// voy a agrepar la edad por funcion para que pueda ser ingresada a cualquier persona
 /// luego agrago una funcion que ademas agraga la altura de la persona al objeto de ella.
+console.log(
+  `
+  
+  `
+);
+/// voy a darle los prototipos de el ejercicio gente,
+/// que el prototipo desarrollador tenga la herencia prototipal o herede de gente
+
+function heredaDe(prototipoHijo, prototipoPadre) {
+  //aqui le vamos a decir al prototipo hijo, quien es su prototipo padre
+  var fn = function () {};
+  fn.prototype = prototipoPadre.prototype;
+  prototipoHijo.prototype = new fn();
+  prototipoHijo.prototype.constructor = prototipoHijo; // esta linea es indispensable porque si no se hace la funcion llamara al constructor del paadre
+}
 
 function gente(nombre, apellido, ocupacion) {
   this.nombre = nombre;
@@ -564,3 +579,160 @@ console.log(`
 `);
 // Herencia prototipal... vamos a crear un hijo de mi prototipo gente... vamos a crear nuevas personas con una nueva ocupacion ...
 // para este ejemplo desarrolladores.
+
+// manera antigüita
+
+function desarrollador(nombre, apellido, ocupacion) {
+  // esta es la funcion que se va a ejecutar cuando cree desarrolladores
+  this.nombre = nombre;
+  this.apellido = apellido;
+  this.ocupacion = ocupacion;
+}
+
+desarrollador.prototype.saludar = function () {
+  console.log(
+    `Hola soy ${this.nombre} ${this.apellido} y soy un ${this.ocupacion}`
+  );
+};
+
+heredaDe(desarrollador, gente);
+
+let maribel = new desarrollador("maribel", "madrigal", "desarrolladora");
+let antonio = new desarrollador("antonio", "madrigal", "desarrollador");
+let bruno = new desarrollador("bruno", "madrigal", "desarrollador");
+
+maribel.saludar();
+antonio.edad(9);
+bruno.altura();
+
+console.log(maribel);
+console.log(bruno);
+console.log(`
+
+`);
+// el codigo de arriba es la forma de hacer la erencia prototipal a la antigüita
+
+// voy a hacer el ejercicio de herencia prototipal con clases. Con un ejemplo inventado con mascotas.
+
+class Mascotas {
+  constructor(nombre, tipo, raza, propietario) {
+    this.nombre = nombre;
+    this.tipo = tipo;
+    this.raza = raza;
+    this.propietario = propietario;
+  }
+  presentar(x) {
+    if (
+      this.propietario.charAt(this.propietario.length - 1) === "a" ||
+      "e" ||
+      "i"
+    ) {
+      console.log(
+        `Hola ${this.nombre} es un ${this.raza}, es un animal domestico y su dueña es ${this.propietario}  `
+      );
+    } else {
+      console.log(
+        `Hola ${this.nombre} es un ${this.raza}, es un animal domestico y su dueño es ${this.propietario} `
+      );
+    }
+    if (x) {
+      x(this.nombre, this.raza, false);
+    }
+  }
+
+  edad(edad) {
+    this.edad = edad;
+    console.log(
+      `${this.nombre} es un ${this.tipo} que tiene ${this.edad} años`
+    );
+  }
+
+  peso() {
+    let peso = Math.round(Math.random() * 100);
+    this.peso = peso;
+    if (peso < 51) {
+      console.log(
+        `${this.nombre} pesa ${this.peso} kg. Su peso esta en un rango saludable`
+      );
+    }
+    if (peso >= 51) {
+      console.log(
+        `${this.nombre} pesa ${this.peso} kg. Su peso esta por encima de un rango saludable. Esta en sobre peso.`
+      );
+    }
+  }
+}
+
+let Drago = new Mascotas("Drago", "canino", "Pitbull", "Laura");
+let Roccu = new Mascotas("Roccu", "canino", "Pastor Aleman", "Jose");
+let Hipo = new Mascotas("Hipo", "felino", "criolla", "paula");
+let Pato = new Mascotas("Pato", "Porcino", "vietnamita", "Melissa");
+
+Drago.presentar();
+Roccu.edad(3);
+Hipo.peso();
+Pato.presentar();
+Pato.edad(2);
+Pato.peso();
+
+console.log(Pato);
+console.log(`
+
+`);
+
+// clase que hereda de otra
+console.log(`ejercicio donde la Clase granja, heredara de la Clase Mascotas.
+Los metodos seran los mismos, menos presentar que sera pisado ya que este mensaje dira que son animales salvajes`);
+console.log(`
+
+`);
+
+class animales_salvajes extends Mascotas {
+  constructor(nombre, tipo, raza, propietario) {
+    super(nombre, tipo, raza, propietario);
+  }
+
+  presentar(x) {
+    if (this.nombre.charAt(this.nombre.length - 1) === "a" || "e" || "i") {
+      console.log(
+        `${this.nombre} es una ${this.raza} es decir un ${this.tipo} y se encuentra preservada en en el zoologico ${this.propietario}`
+      );
+    } else {
+      console.log(
+        `${this.nombre} es un ${this.raza} es decir un ${this.tipo} y se encuentra preservado en en el zoologico ${this.propietario}`
+      );
+    }
+    if (x) {
+      x(this.nombre, this.raza, true);
+    }
+  }
+}
+
+console.log(`ejercicio de una funcion que pasa por parametro. En este caso la funcion responder, 
+respondera el saludo de los animales diciendo si es una animal domestico o salvaje. 
+
+`);
+
+function responder(nombre, raza, esSalv) {
+  if (esSalv === false) {
+    console.log(`${nombre} es un animal domestico porque es un ${raza} `);
+  }
+  if (esSalv === true) {
+    console.log(`${nombre} es un animal salvaje porque es un ${raza} `);
+  }
+}
+let Pantera = new animales_salvajes("Lola", "felino", "pantera", "Zootopia");
+let Leon = new animales_salvajes(
+  "Marco",
+  "felino",
+  "león de Katanga o Angola",
+  "zootopia"
+);
+
+Drago.presentar(responder);
+Roccu.presentar();
+Pantera.presentar(responder);
+Leon.presentar();
+Pantera.edad(4);
+Pantera.peso();
+//////////////////////////////////
