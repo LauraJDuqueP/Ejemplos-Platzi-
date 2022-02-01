@@ -40,16 +40,143 @@ function hell(id, callback) {
     }
   });
 }
-hell(1, function () {
-  hell(2, function () {
-    hell(3, function () {
-      hell(4, function () {
-        hell(5, function () {
-          hell(6, function () {
-            hell(7);
-          });
-        });
-      });
-    });
+// hell(1, function () {
+//   hell(2, function () {
+//     hell(3, function () {
+//       hell(4, function () {
+//         hell(5, function () {
+//           hell(6, function () {
+//             hell(7);
+//           });
+//         });
+//       });
+//     });
+//   });
+// });
+
+////como solucionar cuando aparece un error que no deja ejecutar completo el problema con callbacks
+
+function FueraError(id, callback) {
+  const ur = `${API_URL}${PEOPLE_URL.replace(":id", id)}`;
+  $.get(ur, y, callback).fail(function () {
+    console.log(
+      `Sucedio un error. No se puede completar el protocolo de ejecucion `
+    );
   });
-});
+}
+
+// FueraError(1, function (persona) {
+//   console.log(`Hola, yo soy ${persona.name} `);
+
+//   FueraError(2, function (persona) {
+//     console.log(`Hola, yo soy ${persona.name} `);
+
+//     FueraError(17, function (persona) {
+//       // el personaje 17 no esta en la pag asi que hará saltar el error
+//       console.log(`Hola, yo soy ${persona.name} `);
+
+//       FueraError(4, function (persona) {
+//         console.log(`Hola, yo soy ${persona.name} `);
+
+//         FueraError(5, function (persona) {
+//           console.log(`Hola, yo soy ${persona.name} `);
+
+//           FueraError(6, function (persona) {
+//             console.log(`Hola, yo soy ${persona.name} `);
+
+//             FueraError(7, function (persona) {
+//               console.log(`Hola, yo soy ${persona.name} `);
+//             });
+//           });
+//         });
+//       });
+//     });
+//   });
+// });
+
+/// vamos a trabajar Promesas ...
+
+function Pro(id) {
+  return new Promise(function (resolve, reject) {
+    const u = `${API_URL}${PEOPLE_URL.replace(":id", id)}`;
+
+    $.get(u, y, function (data) {
+      resolve(data);
+    }).fail(() => reject(id));
+  });
+}
+
+// Pro(1)
+//   .then(function (persona) {
+//     console.log(`Hola yo soy ${persona.name}`);
+//   })
+//   .catch(function (id) {
+//     console.log(
+//       `Lo sentimos no se encontro un resultado, intente con otro numero`
+//     );
+//   });
+// Pro(2)
+//   .then(function (persona) {
+//     console.log(`Hola yo soy ${persona.name}`);
+//   })
+//   .catch(function (id) {
+//     console.log(
+//       `Lo sentimos no se encontro un resultado, intente con otro numero`
+//     );
+//   });
+// Pro(3)
+//   .then(function (persona) {
+//     console.log(`Hola yo soy ${persona.name}`);
+//   })
+//   .catch(function (id) {
+//     console.log(
+//       `Lo sentimos no se encontro un resultado, intente con otro numero`
+//     );
+//   });
+// Pro(17)
+//   .then(function (persona) {
+//     console.log(`Hola yo soy ${persona.name}`);
+//   })
+//   .catch(function (id) {
+//     console.log(
+//       `Lo sentimos no se encontro un resultado, intente con otro numero`
+//     );
+//   });
+
+function jiji(a, b, c, d) {
+  let g = [a, b, c, d];
+  for (let i = 1; i <= g.length; i++) {
+    function Pro([i]) {
+      return new Promise(function (resolve, reject) {
+        const u = `${API_URL}${PEOPLE_URL.replace(":id", [i])}`;
+
+        $.get(u, y, function (data) {
+          resolve(data);
+        }).fail(() => reject([i]));
+      });
+    }
+    Pro([i])
+      .then(function (data) {
+        console.log(`Hola yo soy ${data.name}`);
+      })
+      .catch(function ([i]) {
+        console.log(
+          `Lo sentimos no se encontro un resultado, intente con otro numero`
+        );
+      });
+  }
+} //
+
+// jiji(1, 2, 3, 4); // aqui intente con un for pasar por un array los id para que se vieran en orden peeero para mi sorpresa
+// creo que la peticion de jiji se pasa completa y devuelve todo como quiere el JS :(
+// la solucion esta en Promise.all
+
+Promise.all([Pro(1), Pro(2), Pro(3), Pro(4)])
+  .then(function (persona) {
+    console.log(`Hola yo soy ${persona.name}`);
+  })
+  .catch(function (id) {
+    console.log(
+      `Lo sentimos no se encontro un resultado, intente con otro numero`
+    );
+  }); /// tengo un error porque me salta undefined
