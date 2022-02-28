@@ -171,12 +171,69 @@ function jiji(a, b, c, d) {
 // creo que la peticion de jiji se pasa completa y devuelve todo como quiere el JS :(
 // la solucion esta en Promise.all
 
-Promise.all([Pro(1), Pro(2), Pro(3), Pro(4)])
+// Promise.all([Pro(1), Pro(2), Pro(3), Pro(4)])
+//   .then(function (data) {
+//     console.log(data);
+//   })
+//   .catch(function (id) {
+//     console.log(
+//       `Lo sentimos no se encontro un resultado, intente con otro numero`
+//     );
+//   }); /// tengo un error porque me salta undefined
+
+///////
+//encadenando promesas
+
+// Pro(1)
+//   .then((personaje) => {
+//     console.log(`El personaje es ${personaje.name}`);
+//     return Pro(2);
+//   })
+//   .then((personaje) => {
+//     console.log(`El personaje es ${personaje.name}`);
+//     return Pro(3);
+//   })
+//   .then((personaje) => {
+//     console.log(`El personaje es ${personaje.name}`);
+//     return Pro(17);
+//   })
+//   .catch(function (id) {
+//     console.log(id);
+//     console.log(`Lo sentimos la entrada no es valida`);
+//   });
+
+// multiples promesas Request en paralelo, es decir las pedimos al tiempo
+
+// function Pro(id) {
+//   return new Promise(function (resolve, reject) {
+//     const u = `${API_URL}${PEOPLE_URL.replace(":id", id)}`;
+
+//     $.get(u, y, function (data) {
+//       resolve(data);
+//     }).fail(() => reject(id));
+//   });
+// }
+
+let ids = [1, 2, 3, 4, 5, 6, 7];
+let Promesitas = ids.map(function (i) {
+  return Pro(i);
+});
+
+Promise.all(Promesitas)
   .then(function (persona) {
-    console.log(`Hola yo soy ${persona.name}`);
+    console.log(persona);
+    for (let i = 1; i < persona.length; i++) {
+      console.log(
+        `Hola yo soy ${persona[i].name} y naci en el año ${persona[i].birth_year}`
+      );
+    }
   })
   .catch(function (id) {
+    console.log(id);
     console.log(
-      `Lo sentimos no se encontro un resultado, intente con otro numero`
+      `Lo sentimos la entrada ${id} no es valida, por favor verificar el dato`
     );
-  }); /// tengo un error porque me salta undefined
+  });
+
+console.log(ids);
+// console.log(Promesitas);
