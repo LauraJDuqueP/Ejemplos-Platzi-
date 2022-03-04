@@ -204,7 +204,7 @@ function jiji(a, b, c, d) {
 
 // multiples promesas Request en paralelo, es decir las pedimos al tiempo
 
-// function Pro(id) {
+// function Pro(id) { ////// esto ya existe, solo es la copia para ver mejor el trabajo.. esta arriba declarado
 //   return new Promise(function (resolve, reject) {
 //     const u = `${API_URL}${PEOPLE_URL.replace(":id", id)}`;
 
@@ -214,26 +214,62 @@ function jiji(a, b, c, d) {
 //   });
 // }
 
-let ids = [1, 2, 3, 4, 5, 6, 7];
-let Promesitas = ids.map(function (i) {
-  return Pro(i);
-});
+// let ids = [1, 2, 3, 4, 5, 6, 7];
+// let Promesitas = ids.map(function (i) {
+//   return Pro(i);
+// });
 
-Promise.all(Promesitas)
-  .then(function (persona) {
-    console.log(persona);
-    for (let i = 1; i < persona.length; i++) {
+// Promise.all(Promesitas)
+//   .then(function (persona) {
+//     console.log(persona);
+//     for (let i = 0; i < persona.length; i++) {
+//       console.log(
+//         `Hola yo soy ${persona[i].name} y naci en el año ${persona[i].birth_year}`
+//       );
+//     }
+//   })
+//   .catch(function (id) {
+//     console.log(id);
+//     console.log(
+//       `Lo sentimos la entrada ${id} no es valida, por favor verificar el dato`
+//     );
+//   });
+
+// console.log(ids);
+// // console.log(Promesitas);
+
+// function Pro(id) { ////// esto ya existe, solo es la copia para ver mejor el trabajo.. esta arriba declarado
+//   return new Promise(function (resolve, reject) {
+//     const u = `${API_URL}${PEOPLE_URL.replace(":id", id)}`;
+
+//     $.get(u, y, function (data) {
+//       resolve(data);
+//     }).fail(() => reject(id));
+//   });
+// }
+
+function onError(f) {
+  console.log(f);
+  console.log(`Lo sentimos la entrada ${f} no es valida, intena una nueva`);
+}
+
+async function obteniendopersonajes() {
+  let quienes = [1, 2, 3, 4, 5, 6, 7];
+  let Promesas = quienes.map((id) => Pro(id));
+
+  try {
+    var personajes = await Promise.all(Promesas);
+    console.log(personajes);
+    for (let i = 0; i < personajes.length; i++) {
       console.log(
-        `Hola yo soy ${persona[i].name} y naci en el año ${persona[i].birth_year}`
+        `Hola soy ${personajes[i].name} y naci en el año ${personajes[i].birth_year} `
       );
     }
-  })
-  .catch(function (id) {
-    console.log(id);
-    console.log(
-      `Lo sentimos la entrada ${id} no es valida, por favor verificar el dato`
-    );
-  });
+  } catch (id) {
+    onError(id);
+    // console.log(id);
+    // console.log(`Lo sentimos la entrada ${id} no es valida, intena una nueva`);
+  }
+}
 
-console.log(ids);
-// console.log(Promesitas);
+obteniendopersonajes();

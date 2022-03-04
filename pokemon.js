@@ -146,36 +146,95 @@ function Promes(p) {
 // no logro que se muestre el mensaje cuando la llamada es exitosa
 
 /// promesas encadenadas
-Promes(1)
-  .then((personajePokemon) => {
+
+// Promes(1)
+//   .then((personajePokemon) => {
+//     console.log(
+//       `Hola soy el pokemon ${personajePokemon.name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
+//     );
+//     return Promes(2);
+//   })
+//   .then((personajePokemon) => {
+//     console.log(
+//       `Hola soy el pokemon ${personajePokemon.name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
+//     );
+//     return Promes(3);
+//   })
+//   .then((personajePokemon) => {
+//     console.log(
+//       `Hola soy el pokemon ${personajePokemon.name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
+//     );
+//     return Promes(4);
+//   })
+//   .then((personajePokemon) => {
+//     console.log(
+//       `Hola soy el pokemon ${personajePokemon.name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
+//     );
+//     return Promes(0);
+//   })
+//   .then((personajePokemon) => {
+//     console.log(
+//       `Hola soy el pokemon ${personajePokemon.name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
+//     );
+//   })
+//   .catch(function id() {
+//     console.log(`Lo sentimos la entrada para Pokemon no es valida`);
+//   });
+
+//// Multiples Promesas en Paralelo
+
+// let i = [1, 2, 3, 4, 5, 6, 7];
+// let Promesotas = i.map(function (id) {
+//   return Promes(id);
+// });
+
+// Promise.all(Promesotas)
+//   .then(function (personas) {
+//     console.log(personas);
+//     for (let j = 0; j < personas.length; j++) {
+//       console.log(
+//         `Hola soy el pokemon ${personas[j].name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
+//       );
+//     }
+//   })
+//   .catch(function (id) {
+//     console.log(id);
+//     console.log(
+//       `Lo sentimos la entrada ${id} para Pokemon no es valida. Verifica el dato`
+//     );
+//   });
+
+// usando async - await .. la idea de esto es hacer multiples promesas en paralelo
+// la idea es que hasta que no se resuelvan todas las promesas el codigo no muestra el resultado
+
+// function Promes(p) {
+//   return new Promise(function (resolve, reject) {
+//     const r = `${Ur}${identi.replace(":id", p)}`;
+
+//     $.get(r, Cr, function (o) {
+//       resolve(o);
+//     }).fail(() => reject(p));
+//   });
+// }
+
+async function quePokemositoEs() {
+  let identificados = [1, 2, 3, 4, 5, 6, 7];
+  let promesas = identificados.map((id) => Promes(id));
+
+  try {
+    let personajes = await Promise.all(promesas);
+    console.log(personajes);
+    for (let i = 0; i < personajes.length; i++) {
+      console.log(
+        `Hola, soy el pokemon ${personajes[i].name} y Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
+      );
+    }
+  } catch (id) {
+    console.log(id);
     console.log(
-      `Hola soy el pokemon ${personajePokemon.name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
+      `lo sentimos la entrada ${id} no es valida, por favor intenta una nueva`
     );
-    return Promes(2);
-  })
-  .then((personajePokemon) => {
-    console.log(
-      `Hola soy el pokemon ${personajePokemon.name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
-    );
-    return Promes(3);
-  })
-  .then((personajePokemon) => {
-    console.log(
-      `Hola soy el pokemon ${personajePokemon.name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
-    );
-    return Promes(4);
-  })
-  .then((personajePokemon) => {
-    console.log(
-      `Hola soy el pokemon ${personajePokemon.name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
-    );
-    return Promes(0);
-  })
-  .then((personajePokemon) => {
-    console.log(
-      `Hola soy el pokemon ${personajePokemon.name}. Podras ver todos mis poderes cuando mi programadora aprenda como hacerlo`
-    );
-  })
-  .catch(function id() {
-    console.log(`Lo sentimos la entrada para Pokemon no es valida`);
-  });
+  }
+}
+
+quePokemositoEs();
